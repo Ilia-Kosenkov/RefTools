@@ -19,6 +19,8 @@ namespace Tests
         [Test]
         public void Test_Inc_HeapArray()
         {
+            var z = new ulong[1024];
+
             ReadOnlySpan<ulong> x = new ulong[]
             {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
@@ -31,13 +33,10 @@ namespace Tests
                 itt = ref Inc(in itt)
             )
             {
-                GC.Collect(3, GCCollectionMode.Forced, true, true);
-                GC.WaitForFullGCComplete();
-                GC.Collect(3, GCCollectionMode.Forced, true, true);
-                GC.WaitForFullGCComplete();
+                GC.Collect(2, GCCollectionMode.Forced, true, true);
+                GC.Collect(2, GCCollectionMode.Forced, true, true);
 
                 sum += itt;
-
             }
 
 
