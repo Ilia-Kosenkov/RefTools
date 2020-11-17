@@ -30,11 +30,11 @@ namespace RefTools
         public static ref T DecMut<T>(ref T @this) where T : unmanaged => ref Subtract(ref @this, 1);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static nint Offset<T>(in T origin, in T target) where T : unmanaged =>
+        public static nint ItemOffset<T>(in T origin, in T target) where T : unmanaged =>
             (nint)((long)ByteOffset(in origin, in target) / SizeOf<T>());
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static nint Offset(in byte origin, in byte target) =>
+        public static nint ItemOffset(in byte origin, in byte target) =>
             ByteOffset(in origin, in target);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
