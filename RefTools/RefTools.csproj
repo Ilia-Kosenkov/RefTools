@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup> 
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<LangVersion>9</LangVersion>
+		<Nullable>enable</Nullable>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>RefTools</PackageId>
+		<Version>0.1.9999</Version>
+		<Authors>Ilia Kosenkov</Authors>
+		<PackageDescription>Tools to work with refs.</PackageDescription>
+		<RepositoryUrl>https://github.com/Ilia-Kosenkov/RefTools</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+	</ItemGroup>
+
+</Project>
