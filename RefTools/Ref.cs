@@ -64,10 +64,10 @@ namespace RefTools
 
         public static int Compare<T>(in T left, in T right) where T : unmanaged
         {
-            if (IsGreater(in left, in right))
-                return 1;
             if (IsLess(in left, in right))
                 return -1;
+            if (IsGreater(in left, in right))
+                return 1;
             return 0;
         }
 

@@ -106,5 +106,36 @@ namespace Tests
             Assert.AreEqual(ItemOffset(in x[0], in x[x.Length - 1]), (IntPtr)(x.Length - 1));
 
         }
+
+        [Test]
+        public void Test_IncDecMut_HeapArray()
+        {
+            var x = new ulong[]
+            {
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            };
+            var y = new ulong[x.Length];
+
+            ref readonly var xEnd = ref x[x.Length - 1];
+            ref readonly var yStart = ref y[0];
+
+            ref readonly var xItt = ref x[0];
+            ref var yItt = ref y[y.Length - 1];
+
+            for (
+                ;
+                Compare(in xItt, in xEnd) <= 0 && Compare(in yItt, in yStart) >= 0;
+                xItt = ref Inc(in xItt), yItt = ref DecMut(ref yItt)
+            )
+                yItt = xItt;
+
+            for(
+                ref readonly ulong xItt2 = ref x[0], yItt2 = ref y[y.Length - 1];
+                Compare(in xItt2, in xEnd) <= 0 && Compare(in yItt2, in yStart) >= 0;
+                xItt2 = ref Inc(in xItt2), yItt2 = ref Dec(in yItt2)
+            )
+                Assert.AreEqual(xItt2, yItt2);
+
+        }
     }
 }
