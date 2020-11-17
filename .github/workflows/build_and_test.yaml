@@ -1,0 +1,42 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ master ]
+    tags-ignore: 
+      - 'v*'
+    paths:
+      - '**/*cs'
+      - '**/*csproj'
+  pull_request:
+    branches: [ master ]
+    tags-ignore: 
+      - 'v*'
+    paths:
+      - '**/*cs'
+      - '**/*csproj'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100
+    - name: Setup Mono
+      run: sudo apt install mono-devel -y
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test .NET 5
+      run: dotnet test --no-restore --verbosity normal -f net5.0
+    - name: Test .NET 4.8
+      run: dotnet test --no-restore --verbosity normal -f net4.8
+
+    
+
+
