@@ -1,8 +1,5 @@
 using System.Runtime.CompilerServices;
 using static System.Runtime.CompilerServices.Unsafe;
-#if NETSTANDARD2_0
-using nint = System.IntPtr;
-#endif
 
 namespace RefTools
 {
@@ -51,6 +48,14 @@ namespace RefTools
             ref Subtract(ref AsRef(in source), elementOffset);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ref T AddMut<T>(ref T source, int elementOffset) where T : unmanaged =>
+            ref Unsafe.Add(ref source, elementOffset);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ref T SubMut<T>(ref T source, int elementOffset) where T : unmanaged =>
+            ref Subtract(ref source, elementOffset);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool AreSame<T>(in T left, in T right) where T : unmanaged =>
             Unsafe.AreSame(ref AsRef(in left), ref AsRef(in right));
 
@@ -66,13 +71,15 @@ namespace RefTools
         {
             if (IsLess(in left, in right))
                 return -1;
-            if (IsGreater(in left, in right))
-                return 1;
-            return 0;
+            return IsGreater(in left, in right) ? 1 : 0;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref readonly T NullRef<T>() where T : unmanaged => ref Unsafe.NullRef<T>();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static nint AddrOf<T>(in T @ref) where T : unmanaged
+            => ByteOffset(in NullRef<T>(), in @ref);
 
     }
 }
