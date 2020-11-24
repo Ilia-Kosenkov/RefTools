@@ -76,6 +76,9 @@ namespace RefTools
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref readonly T NullRef<T>() where T : unmanaged => ref Unsafe.NullRef<T>();
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsNull<T>(in T @ref) where T : unmanaged => IsNullRef(ref AsRef(in @ref));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static nint AddrOf<T>(in T @ref) where T : unmanaged
