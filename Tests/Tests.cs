@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Runtime.CompilerServices;
 using static RefTools.Ref;
 
 namespace Tests
@@ -136,6 +137,14 @@ namespace Tests
             )
                 Assert.AreEqual(xItt2, yItt2);
 
+        }
+
+        [Test]
+        public void Test_Nulls()
+        {
+            ref readonly var @null = ref NullRef<uint>();
+
+            Assert.IsTrue(IsNull(in @null));
         }
     }
 }

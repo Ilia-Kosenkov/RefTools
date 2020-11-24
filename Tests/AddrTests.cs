@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using RefTools;
 using static RefTools.Ref;
@@ -35,9 +36,9 @@ namespace Tests
             fixed (ulong* tempPtr = buff)
                 fixedRef2 = new IntPtr(tempPtr);
 
-            Assume.That((long) addrRef1, Is.Not.EqualTo((long) addrRef2));
-            Assume.That((long) pointerRef1, Is.Not.EqualTo((long) pointerRef2));
-            Assume.That((long) fixedRef1, Is.Not.EqualTo((long) fixedRef2));
+            //Assert.That((long) addrRef1, Is.Not.EqualTo((long) addrRef2));
+            //Assert.That((long) pointerRef1, Is.Not.EqualTo((long) pointerRef2));
+            //Assert.That((long) fixedRef1, Is.Not.EqualTo((long) fixedRef2));
 
 
             Assert.AreEqual((long) addrRef1, (long) pointerRef1);
@@ -69,5 +70,6 @@ namespace Tests
                 Assert.AreEqual(currOff - offset, sizeof(ulong) * i);
             }
         }
+
     }
 }
