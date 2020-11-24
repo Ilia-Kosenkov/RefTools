@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Runtime.CompilerServices;
+using RefTools;
 using static RefTools.Ref;
-using static RefTools.Iter;
 
 namespace Tests
 {
@@ -58,7 +58,7 @@ namespace Tests
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
             };
 
-            ref readonly var start = ref Begin(buff);
+            ref readonly var start = ref ((ReadOnlySpan<ulong>)buff).Begin();
 
             var offset = (long)AddrOf(in start);
 
