@@ -48,5 +48,25 @@ namespace Tests
 
 
         }
+
+        [Test]
+        public void Test_ElemAddr()
+        {
+            var buff = new ulong[]
+            {
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+            };
+
+            ref readonly var start = ref Iter.Begin(buff);
+
+            var offset = (long)Ref.AddrOf(in start);
+
+            for(var i = 0; i < buff.Length; i++)
+            {
+                var currOff = (long)Ref.AddrOf(in buff[i]);
+
+                Assert.AreEqual(currOff - offset, sizeof(ulong) * i);
+            }
+        }
     }
 }
