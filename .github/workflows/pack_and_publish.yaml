@@ -2,6 +2,8 @@ name: Pack and Publish
 
 on:
   push:
+    branches:
+      - 'master'
     tags:
       - 'v*'
     
@@ -14,6 +16,8 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -32,6 +36,8 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v2
+        with:
+        fetch-depth: 0
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
@@ -47,6 +53,8 @@ jobs:
     needs: pack
     steps:
       - uses: actions/checkout@v2
+        with:
+        fetch-depth: 0
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
@@ -62,31 +70,33 @@ jobs:
     runs-on: ubuntu-latest
     needs: publish
     steps:
-     - uses: actions/checkout@v2
-     - name: Creating release
-       id: create_release
-       uses: actions/create-release@v1
-       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-     - name: Download package
-       uses: actions/download-artifact@v2.0.6
-       with:
-          name: PackedLibrary
-          path: ./Packed
-     - name: Get exact package name
-       run: echo "ARTIFACT_FNAME=$(ls ./Packed/*nupkg | grep -Po '(?<=/)[^/]+?$')" >> $GITHUB_ENV
-     - name: Get package path
-       run: echo "ARTIFACT_PATH=$(ls ./Packed/*nupkg)" >> $GITHUB_ENV
-     - name: Add artifact
-       uses: actions/upload-release-asset@v1
+      - uses: actions/checkout@v2
+        with:
+        fetch-depth: 0
+      - name: Creating release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Download package
+        uses: actions/download-artifact@v2.0.6
+        with:
+            name: PackedLibrary
+            path: ./Packed
+      - name: Get exact package name
+        run: echo "ARTIFACT_FNAME=$(ls ./Packed/*nupkg | grep -Po '(?<=/)[^/]+?$')" >> $GITHUB_ENV
+      - name: Get package path
+        run: echo "ARTIFACT_PATH=$(ls ./Packed/*nupkg)" >> $GITHUB_ENV
+      - name: Add artifact
+        uses: actions/upload-release-asset@v1
 
-       with:
-         upload_url: ${{ steps.create_release.outputs.upload_url }}
-         asset_path: ${{ env.ARTIFACT_PATH }}
-         asset_name: ${{ env.ARTIFACT_FNAME }}
-         asset_content_type: application/zip    
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ARTIFACT_PATH }}
+          asset_name: ${{ env.ARTIFACT_FNAME }}
+          asset_content_type: application/zip    
 
 
