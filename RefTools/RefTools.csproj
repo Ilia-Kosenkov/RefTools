@@ -9,7 +9,6 @@
 
 	<PropertyGroup>
 		<PackageId>RefTools</PackageId>
-		<Version>0.1.9999</Version>
 		<Authors>Ilia Kosenkov</Authors>
 		<PackageDescription>Tools to work with refs.</PackageDescription>
 		<RepositoryUrl>https://github.com/Ilia-Kosenkov/RefTools</RepositoryUrl>
@@ -23,7 +22,7 @@
 	<ItemGroup>
 	  <PackageReference Include="MinVer" Version="2.3.1">
 	    <PrivateAssets>all</PrivateAssets>
-	    <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="System.Memory" Version="4.5.4" />
 	  <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
