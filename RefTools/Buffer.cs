@@ -2,7 +2,7 @@
 
 namespace RefTools
 {
-    internal static class Buffer
+    public static class Buffer
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ZeroMemory(ref byte ptr, uint len) =>
